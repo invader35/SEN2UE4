@@ -1,0 +1,183 @@
+\documentclass[10pt,a4paper, parskip=half]{scrartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage[german]{babel}
+\usepackage{ucs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{hyperref}
+\author{Schett Matthias}
+\title{SEN-Übung 2.4}
+\begin{document}
+\definecolor{gray}{rgb}{0.9,0.9,0.9}
+\lstset{language=[Visual]Basic, morekeywords={param, local}}
+\maketitle
+
+\section{Aufgabe 1}
+
+\subsection{L\"{o}sungsidee}
+
+Die Klasse WeatherStation soll eine Wetterstation abbilden.
+\\Es gibt 3 Member: mName, mCelsius, mHumidity.
+\\Weiters werden folgende Methoden verwendet:
+
+\begin{enumerate}
+	\item WeatherStation(std::string const \&name="", double celsius=0, double humidity=0);\label{Ctr1}
+    \item std::string const \&GetName() const;\label{getname}
+    \item void SetName(std::string const \&name);\label{setname}
+    \item double GetCelsius() const;\label{getcels}
+    \item void SetCelsius(double c);\label{setcels}
+    \item double GetFahrenheit() const;\label{getfahren}
+    \item void SetFahrenheit(double f);\label{setfahren}
+    \item double GetHumidity() const;\label{gethum}
+    \item void SetHumidity(double h);\label{sethum}
+	\item void Print(std::ostream \&out) const;\label{print}
+\end{enumerate}
+
+ad \ref{Ctr1}
+Der Konstruktor nimmt die Werte für die 3 Member an und weist sie mittels der Elementinialierliste zu.
+Sollte nichts angegeben werden, gibt es Defaultwerte.
+
+ad \ref{getname}
+GetName() ist ein einfacher Getter und gibt mName zurück.
+
+ad \ref{setname}
+SetName() setzt mName auf name.
+
+ad \ref{getcels}
+GetCelsisus() ist ein einfacher Getter der mCelsius zurückgibt.
+
+ad \ref{setcels}
+SetCelsius() setzt mCelsius auf den Wert von c.
+
+ad \ref{getfahren}
+GetFahrenheit() gibt mCelsius in Fahrenheit umgerechnet zurück. Zur Berrechnung der Fahrenheit wird folgende Formel verwendet:
+\[ T_F = T_C * 1.8 + 32 \]
+
+ad \ref{setfahren}
+SetFahrenheit() setzt mCelsius auf den in Celsisus umgerechneten Wert von f. Zur Berechnung wird folgende Formel verwendet:
+\[ T_C = \frac{(T_F - 32)}{1.8} \]
+
+ad \ref{gethum}
+GetHumidity() gibt den Wert von mHumidity zurück.
+
+ad \ref{sethum}
+SetHumidity setzt den Wert von mHumidity auf den Wert von h.
+
+ad \ref{print}
+Print() kümmert sich um die Ausgabe. Diese gibt die Werte der drei Member auf dem Übergebenen std::ostream aus.
+
+\subsection{Code}
+
+Der Code befindet sich im Anhang unter \nameref{sec:WeatherStationHeader} und \nameref{sec:WeatherStationCpp}.
+Der Testreiber ist im Anhang unter \nameref{sec:TestTreiberA1} zu finden.
+
+\subsection{Testf\"{a}lle}
+
+Der Testreiber testet die Funktionnalität indem er zuerst ein Objekt erstellt und anschließend sämtliche Methoden aufruft.
+\paragraph{Ausgabe}
+
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}]{OutputA1.txt}
+
+\newpage
+
+\section{Aufgabe 2}
+
+\subsection{Lösungsidee}
+
+Die Klasse Weatherstations bildet eine Verwaltung für Wetterstationen ab, dazu gibt es die Member:
+\\mMaxNumber (die maximale Anzahl an Wetterstationen), mNumberOfStations (die aktuelle Anzahl an Wetterstationen) und ein dynamischen Array
+für Wetterstationen mStationArray.
+\\Weiters gibt es noch folgende Funktionen:
+
+\begin{enumerate}
+	\item WeatherStation \& searchForColdest() const throw(WeatherException\&);\label{searchCold}
+    \item WeatherStation \& searchForWarmest() const throw(WeatherException\&);\label{searchWarm}
+    \item WeatherStations(size\_t maxNr=10);\label{Ctr}
+	\item WeatherStations(WeatherStations const \&ws);\label{copyCtr}
+	\item ~WeatherStations();\label{Destr}
+	\item WeatherStations \&operator =(WeatherStations const \&ws);\label{asign}
+	\item bool Add(WeatherStation const \&ws);\label{add}
+	\item size\_t GetNrStations() const;\label{getNr}
+    \item void PrintAll(std::ostream \&out) const;\label{printAll}
+    \item void PrintColdest(std::ostream \&out) const;\label{printCold}
+    \item void PrintWarmest(std::ostream \&out) const;\label{printWarm}
+\end{enumerate}
+
+ad \ref{searchCold}
+Die Funktion searchForColdest() ist eine Private Funktion und sucht aus mStationArray die Wetterstation mit der niedrigsten Temperatur und gibt sie zurück.
+Sollte mStationArray leer sein wird eine Exception geworfen um den Methodenaufruf abzubrechen.
+
+ad \ref{searchWarm}
+Die Funktion searchForWarmest() ist eine Private Funktion und sucht aus mStationArray die Wetterstation mit der höchsten Temperatur und gibt sie zurück.
+Sollte mStationArray leer sein wird eine Exception geworfen um den Methodenaufruf abzubrechen.
+
+ad \ref{Ctr}
+Der Konstruktor weißt mMaxNumber maxNr zu und erstellt ein dynamisches Array mit der Anzahl von maxNr Einträgen, zusätzlich wird mNumberOfStations auf 0 gesetzt.
+Sämtliche Operationen, werden mittels Elementinitalisierliste durchgeführt.
+
+ad \ref{copyCtr}
+Der Copy Konstruktor kopiert alle Werte von ws in das neue Objekt. Bei mStationArray wird eine tiefe Kopie (also das Kopieren der einzelnen Werte, nicht der Adressen) erstellt.
+
+ad \ref{Destr}
+Der Destruktor gibt den Speicher des dynamisch erstellten Arrays mittels delete [] wieder frei.
+
+ad \ref{asign}
+Der Zuweisungsoperator kopiert alle Werte von ws in das neue Objekt. Bei mStationArray wird eine flache Kopie (die Adresse wird kopiert) erstellt.
+
+ad \ref{add}
+Add() fügt eine neue Wetterstation in das mStationArray falls noch ein Platz frei sein sollte. Bei Erfolg gibt die Methode true zurück.
+
+ad \ref{getNr}
+GetNrStations() gibt mNumberOfStations zurück.
+
+ad \ref{printAll}
+PrintAll() ruft für jedes Element in mStationArray die Print() Funktion auf. Mittels out kan angegeben werden auf welchen Stream geschrieben werden soll.
+
+ad \ref{printCold}
+PrintColdest() ruft den Wert von searchColdest() auf dem Stream out aus.
+
+ad \ref{printWarm}
+PrintWarmest() ruft den Wert von searchWarmest() auf dem Stream out aus.
+
+\subsection{Code}
+
+Der Code befindet sich im Anhang unter \nameref{sec:WeatherManagerHeader} und \nameref{sec:WeatherManagerCpp}.
+Der Testreiber befindet sich im Anhang unter \nameref{sec:TestTreiberA2}
+Zusätzlich wird der Code aus Aufgabe 1 mitverwendet.
+
+\newpage
+\subsection{Testfälle}
+
+Der Testreiber testet die Funktionnalität indem er zuerst ein Objekt erstellt, vier Wetterstationen versucht hinzuzfügen und anschließend sämtliche Methoden aufruft.
+\paragraph{Ausgabe}
+
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}]{OutputA2.txt}
+
+\newpage
+\appendix
+
+\section{Wetterstation Header}\label{sec:WeatherStationHeader}
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]{WeatherStation/WeatherStation.h}
+
+\section{Wetterstation Implementierung}\label{sec:WeatherStationCpp}
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]{WeatherStation/WeatherStation.cpp}
+
+\section{Testreiber A1}\label{sec:TestTreiberA1}
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]{WeatherStation/Main.cpp}
+
+\newpage
+\section{Wetterstations Header}\label{sec:WeatherManagerHeader}
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]{WeatherStationManager/WeatherStations.h}
+
+\section{Wetterstations Implementierung}\label{sec:WeatherManagerCpp}
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]{WeatherStationManager/WeatherStations.cpp}
+
+\section{Testreiber A2}\label{sec:TestTreiberA2}
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]{WeatherStationManager/Main.cpp}
+
+
+\end{document}

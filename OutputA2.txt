@@ -1,0 +1,20 @@
+Test Add
+Neuanlage erfolgreich
+Neuanlage erfolgreich
+Neuanlage erfolgreich
+Wetterstation nicht hinzugefuegt
+Test PrintAll
+Name: WS1 Temperatur: 18.3 Luftfeuchtigkeit: 99
+Name: WS2 Temperatur: 6.3 Luftfeuchtigkeit: 12
+Name: WS3 Temperatur: -17 Luftfeuchtigkeit: 14
+Test Getter
+Should return 3: 3
+Test copy constr
+Coldest of original: Name: WS3 Temperatur: -17 Luftfeuchtigkeit: 14
+
+Coldest of copy: Name: WS3 Temperatur: -17 Luftfeuchtigkeit: 14
+
+Test Assignment operator
+Warmest of original: Name: WS1 Temperatur: 18.3 Luftfeuchtigkeit: 99
+
+Warmest of copy: Name: WS1 Temperatur: 18.3 Luftfeuchtigkeit: 99

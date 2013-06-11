@@ -1,0 +1,10 @@
+Name: Erste Wetterstation Temperatur: 32.3 Luftfeuchtigkeit: 28.3
+Getter und Setter Test
+Setting Name to Hans
+GetName = HansSetting Temperature to 18.3C
+GetTemp = 18.3
+Setting Humidity to 78
+GetHumid = 78
+Setting Temperature to 18.3F
+GetTemp in F = 18.3
+GetTemp in C = -7.61111
